@@ -204,7 +204,7 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Software developed in some public platforms are sources of data that can be used to make prediction about those projects. While the activity of a single developer may be random and hard to predict, when large groups of developers work together on software projects, the resulting behavior can be predicted with good accuracy. 
+Software developed on some public platforms are sources of data that can be used to make predictions about those projects. While the activity of a single developer may be random and hard to predict, when large groups of developers work together on software projects, the resulting behavior can be predicted with good accuracy. 
 
 To demonstrate this, we use 78,455 months of data from 1,628 GitHub projects to make various predictions about the current status of those projects (as of April 2020). We find that traditional estimation algorithms make many mistakes. Algorithms like $k$-nearest neighbors (KNN), support vector regression (SVR), random forest (RFT), linear regression (LNR), and regression trees (CART) have high error rates (usually more than 50\% wrong, sometimes over 130\% wrong, median values). But that error rate can be  greatly reduced using the DECART hyperparameter optimization. DECART is a differential evolution (DE) algorithm that tunes the CART data mining system to the particular details of a specific project.
 
@@ -348,7 +348,7 @@ This paper is structured around the following  research questions.
 
 \textbf{RQ1: Can we predict   trends in project health indicators?}
 We apply five popular machine learning algorithms (i.e., KNN, SVR, LNR, RFT and CART) and one state-of-the-art hyperparameter-optimized predictor (DECART) to   1,628 open-source projects collected from GitHub. 
-Once we collected $N$ months of data, we built predictions for  their current status
+Once we collected $N$ months of data, we made predictions for  the current status of each project
 (as of April 2020)
 using data from months one to  $\mathit{N-j}$  for $\mathit{j\in\{1,3,6,12\}}$  months in the past.
  DECART's median error in those experiments is under 10\%
@@ -366,7 +366,7 @@ using data from months one to  $\mathit{N-j}$  for $\mathit{j\in\{1,3,6,12\}}$  
 \end{blockquote} 
 
 \textbf{RQ2: What features matter the most in prediction?}
-To find the most important features that have been used for prediction, we look into the internal structure of the best predicting model, and count the number of times of each feature that has been used when predicting the monthly trends.
+To find the most important features that have been used for prediction, we look into the internal structure of the best predicting model, and count the number of times that each feature has been used when predicting the monthly trends.
 
 
 \begin{blockquote}
@@ -674,53 +674,7 @@ where $f$ is a parameter controlling differential weight.
 \end{adjustbox}
 \end{table}
 
- 
-The main loop of DE runs over the {\em frontier} of size $np$, replacing old items with new candidates (if new candidate is better). This means that, as the loop progresses, the {\em frontier}  contains increasingly more valuable solutions (which, in turn,
-helps   extrapolation since the next time we pick $x,y,z$, we get better candidates.). 
-
-DE's loops keep repeating till it runs out of {\em lives}. The number of {\em lives} is decremented for each loop (and  incremented every time we find a better solution).
-
-Our initial  experiments 
-showed that of all these off-the-shelf learners, the CART regression tree learner was performing best. Hence, we combine CART with differential evolution to create the DECART hyperparamter  optimzier for CART regression trees. 
-Taking advice from  Storn and Fu et al.~\cite{storn1997differential,Fu2016TuningFS}, we set DE's configuration parameters to $\{\mathit{np,cf,f,\mathit{lives}}\}=\{20,0.75,0.3,10\}$. The CART hyperparameters we control via DE are shown in Table~\ref{tbl:cart}.
-
-
- 
-
-
-% \subsection{Predicting Methods}
-% Many machine learning algorithms have been used for the prediction related to software project development. 
-% Random Forest~\cite{breiman2001random}, Linear Regression~\cite{freedman2009statistical} and Support Vector Machine~\cite{chang2011libsvm} are such instances of regression methods. Random  Forest (RFT) is an ensemble learning method for regression (and classification) tasks that builds a set of trees when training the model. To make the final prediction, it uses the mode of the classes (classification) or mean prediction (regression) of the individual trees.
-% Linear Regression (LNR) fits a linear model with coefficients \mbox{$w = (w_1,...,w_p)$} to minimize the residual sum of squares between the observed targets in the dataset, and the targets predicted by the linear approximation.
-% Support Vector Machine (SVR) uses kernel functions to project
-% the data onto a new hyperspace where complex non-linear patterns
-% can be simply represented.  
-% Another learning approach is to use a Nearest Neighbor method (KNN)~\cite{shepperd1997estimating}. 
-% For each test instance, KNN then selects   $k$ similar analogies out of a training set. The resultant prediction is the the mean of the 
-% class value of those $k$ neighbors.
-
-
-% Some algorithm-based estimators use regression trees such as CART~\cite{brieman84}.
-% CART is a  tree learner that divides a dataset, then recurses
-% on each split.
-% If data contains more than {\em min\_sample\_split}, then a split is attempted.
-% On the other hand, if a split contains no more than {\em min\_samples\_leaf}, then the recursion stops. 
-% CART finds the features whose ranges contain rows with least variance in the number
-% of defects. If an  feature ranges $r_i$ is found in 
-% $n_i$ rows each with an effort  variance of $v_i$, then CART seeks the  feature with a split that most
-% minimizes $\sum_i \left(\sqrt{v_i}\times n_i/(\sum_i n_i)\right)$.
-
-
-
-
-
-
-% \textit{Bayesian Optimization}~\cite{pelikan1999simple} works by assuming the unknown function was sampled from a Gaussian Process and maintains a posterior distribution for this function as observation are made. However, it might not be well-suited for optimization over continuous domains with large number of dimensions~\cite{frazier2018tutorial}.
-
-
-
-
- 
+  
 
 \begin{table}[!b]
 \caption{Repository selecting criteria.}
@@ -788,6 +742,53 @@ Taking advice from  Storn and Fu et al.~\cite{storn1997differential,Fu2016Tuning
 \end{table}
   
 
+ 
+The main loop of DE runs over the {\em frontier} of size $np$, replacing old items with new candidates (if new candidate is better). This means that, as the loop progresses, the {\em frontier}  contains increasingly more valuable solutions (which, in turn,
+helps   extrapolation since the next time we pick $x,y,z$, we get better candidates.). 
+
+DE's loops keep repeating till it runs out of {\em lives}. The number of {\em lives} is decremented for each loop (and  incremented every time we find a better solution).
+
+Our initial  experiments 
+showed that of all these off-the-shelf learners, the CART regression tree learner was performing best. Hence, we combine CART with differential evolution to create the DECART hyperparamter  optimzier for CART regression trees. 
+Taking advice from  Storn and Fu et al.~\cite{storn1997differential,Fu2016TuningFS}, we set DE's configuration parameters to $\{\mathit{np, cf, f, \mathit{lives}}\}=\{20,0.75,0.3,10\}$. The CART hyperparameters we control via DE are shown in Table~\ref{tbl:cart}.
+
+
+ 
+
+
+% \subsection{Predicting Methods}
+% Many machine learning algorithms have been used for the prediction related to software project development. 
+% Random Forest~\cite{breiman2001random}, Linear Regression~\cite{freedman2009statistical} and Support Vector Machine~\cite{chang2011libsvm} are such instances of regression methods. Random  Forest (RFT) is an ensemble learning method for regression (and classification) tasks that builds a set of trees when training the model. To make the final prediction, it uses the mode of the classes (classification) or mean prediction (regression) of the individual trees.
+% Linear Regression (LNR) fits a linear model with coefficients \mbox{$w = (w_1,...,w_p)$} to minimize the residual sum of squares between the observed targets in the dataset, and the targets predicted by the linear approximation.
+% Support Vector Machine (SVR) uses kernel functions to project
+% the data onto a new hyperspace where complex non-linear patterns
+% can be simply represented.  
+% Another learning approach is to use a Nearest Neighbor method (KNN)~\cite{shepperd1997estimating}. 
+% For each test instance, KNN then selects   $k$ similar analogies out of a training set. The resultant prediction is the the mean of the 
+% class value of those $k$ neighbors.
+
+
+% Some algorithm-based estimators use regression trees such as CART~\cite{brieman84}.
+% CART is a  tree learner that divides a dataset, then recurses
+% on each split.
+% If data contains more than {\em min\_sample\_split}, then a split is attempted.
+% On the other hand, if a split contains no more than {\em min\_samples\_leaf}, then the recursion stops. 
+% CART finds the features whose ranges contain rows with least variance in the number
+% of defects. If an  feature ranges $r_i$ is found in 
+% $n_i$ rows each with an effort  variance of $v_i$, then CART seeks the  feature with a split that most
+% minimizes $\sum_i \left(\sqrt{v_i}\times n_i/(\sum_i n_i)\right)$.
+
+
+
+
+
+
+% \textit{Bayesian Optimization}~\cite{pelikan1999simple} works by assuming the unknown function was sampled from a Gaussian Process and maintains a posterior distribution for this function as observation are made. However, it might not be well-suited for optimization over continuous domains with large number of dimensions~\cite{frazier2018tutorial}.
+
+
+
+
+
 
 
 
@@ -803,12 +804,11 @@ After that, to remove repositories with irrelevant topics such as ``books'', ``c
 
 
 Currently, there is no unique and consolidated definition of software project health~\cite{jansen2014measuring,liao2019healthy,link2018assessing}.
-Even so,  most researchers agree that healthy open-source projects need to be ``vigorous'' and ``active''~\cite{wahyudin2007monitoring,jansen2014measuring,manikas2013reviewing,link2018assessing,wynn2007assessing,crowston2006assessing}. As Han et al. mentioned, popular open-source projects tend to be more active~\cite{han2019characterization}. In our study, we select 7 features as health indicators of open-source project on GitHub: number of commits, contributors, open pull-requests, closed pull-requests, open issues, closed issues and stars. The first six features are important GitHub features to indicate the activities of the projects, while the last one is widely used as a symbol of GitHub project's popularity~\cite{borges2016understanding,han2019characterization,aggarwal2014co}.
+However,  most researchers agree that healthy open-source projects need to be ``vigorous'' and ``active''~\cite{wahyudin2007monitoring,jansen2014measuring,manikas2013reviewing,link2018assessing,wynn2007assessing,crowston2006assessing}. As Han et al. mentioned, popular open-source projects tend to be more active~\cite{han2019characterization}. In our study, we select 7 features as health indicators of open-source project on GitHub: number of commits, contributors, open pull-requests, closed pull-requests, open issues, closed issues and stars. The first six features are important GitHub features to indicate the activities of the projects, while the last one is widely used as a symbol of GitHub project's popularity~\cite{borges2016understanding,han2019characterization,aggarwal2014co}.
 
-The features used in this study 
-are listed in  \tbl{feature}.
-In defence of this selection, we note that these features have much overlap with features used by other researchers who explore 
-GitHub~\cite{coelho2020github, yu2016reviewer, han2019characterization}.  
+All the features collected from each project in this study 
+are listed in  \tbl{feature}. These features are carefully selected because some of them were used by other researchers who explore related
+GitHub studies~\cite{coelho2020github, yu2016reviewer, han2019characterization}.  
 
 
 
@@ -841,6 +841,7 @@ GitHub~\cite{coelho2020github, yu2016reviewer, han2019characterization}.
 }
 \label{tbl:feature}
 \begin{adjustbox}{max width=0.48\textwidth}
+\footnotesize
 \begin{tabular}{lllc}
 \rowcolor[HTML]{CCCCCC} 
 {\color[HTML]{000000} Dimension} & {\color[HTML]{000000} Feature} & {\color[HTML]{000000} Description} & \multicolumn{1}{l}{\cellcolor[HTML]{CCCCCC}{\color[HTML]{000000} Predict?}} \\ \hline
@@ -859,10 +860,12 @@ GitHub~\cite{coelho2020github, yu2016reviewer, han2019characterization}.
 \end{tabular}
 \end{adjustbox}
 \end{table}
+
 \begin{table}[!t]
 \caption{ Summary of our  1,628 projects. \mbox{IQR = (75-25)th} percentile. }
 \label{tbl:data}
-\begin{adjustbox}{max width=0.48\textwidth}
+% \small
+\begin{adjustbox}{max width=0.42\textwidth}
 \begin{tabular}{l|cccc}
 \rowcolor[HTML]{BDBDBD} 
 {\color[HTML]{000000} Feature} & \multicolumn{1}{c}{\cellcolor[HTML]{BDBDBD}{\color[HTML]{000000} Min}} & \multicolumn{1}{c}{\cellcolor[HTML]{BDBDBD}{\color[HTML]{000000} Max}} & \multicolumn{1}{c}{\cellcolor[HTML]{BDBDBD}{\color[HTML]{000000} Median}} & \multicolumn{1}{c}{\cellcolor[HTML]{BDBDBD}{\color[HTML]{000000} IQR}} \\\hline
@@ -900,14 +903,13 @@ To get the latest and accurate features
 of our selected repositories,  we use GitHub API v3 for feature collection. For each project, the first commit date is
 used as the starting date of the project. Then all the features are collected and calculated monthly
 from that date up to the present date. For example, the first commit of
-the {\it Koin} project was in June 12,  2017.
-After after, we collected  features from June, 2017 to April, 2020. Due to GitHub API rate limit, we could not
-get features directly from API. Instead, we clone the repo locally and then extracted   features (this technique saved us much grief with API  quotas). 
-Table~\ref{tbl:data} shows a summary of the data collected in this way. 
+the {\it kotlin-native} project was in May 16,  2016.
+After after, we collected  features from May, 2016 to April, 2020. Due to GitHub API rate limit, we could not get some features, like ``monthly\_commits'', which require large amount of direct API calls. Instead, we clone the repo locally and then extracted   features (this technique saved us much grief with API  quotas). 
+Table~\ref{tbl:data} shows a summary of the data collected by using this method. 
 
 
 \subsection{Performance Metrics}
-To evaluate the performance of the learners, we use two performance metrics to measure the prediction results of our experiments: Magnitude of the Relative Error (MRE) and Standardized Accuracy (SA). We use these since (a)~there are advocated in the literature~\cite{shepperd2012evaluating,sarro2016multi}; and (b)~they both offer a way to compare results against some baseline
+To evaluate the performance of learners, we use two performance metrics to measure the prediction results of our experiments: Magnitude of the Relative Error (MRE) and Standardized Accuracy (SA). We use these since (a)~there are advocated in the literature~\cite{shepperd2012evaluating,sarro2016multi}; and (b)~they both offer a way to compare results against some baseline
 (and such  comparisons with some baselines is considered good practice in empirical AI~\cite{Cohen95}).
 
 Our first evaluation measure metric, championed by  Sarro et al.~\cite{sarro2016multi} is the magnitude of the relative error, or MRE. MRE is calculated by expressing absolute residual (AR) as a ratio of actual value, where AR is computed from the difference between predicted and actual values:
@@ -916,16 +918,16 @@ Our first evaluation measure metric, championed by  Sarro et al.~\cite{sarro2016
 \mathit{MRE} = \frac{|\mathit{PREDICT} - \mathit{ACTUAL}|}{\mathit{ACTUAL}}
 \]
 
-One thing to note is, for MRE, if ACTUAL equals ``0'', the metric will have ``divide by zero'' error, this case is possible to happen in our experiment. To overcome this issue, when ACTUAL gets ``0'' in the experiment, we set MRE to ``0'' if PREDICT also is ``0'', or a value larger than ``1'' otherwise.
+For MRE, there is the case when ACTUAL equals ``0'' and then the metric will have ``divide by zero'' error. To deal with this issue, when ACTUAL gets ``0'' in the experiment, we set MRE to ``0'' if PREDICT is also ``0'', or a value larger than ``1'' otherwise.
 
 Sarro et al.~\cite{sarro2016multi} favors MRE
 since, they argue that, it is known that the human expert performance
-for certain SE estimation tasks  has an MRE or 30\%.~\cite{molokken2003review}. That is to say, if some estimators achieve less than 30\% MRE then it can be said to be competitive with human performance.  
+for certain SE estimation tasks  has a MRE of 30\% ~\cite{molokken2003review}. That is to say, if some estimators achieve less than 30\% MRE then it can be said to be competitive with human level performance.  
 
 
 
 
-MRE is criticized because of its bias towards error underestimations~\cite{foss2003simulation,kitchenham2001accuracy,korte2008confidence,port2008comparative,shepperd2000building,stensrud2003further}.  
+MRE has been criticized because of its bias towards error underestimations~\cite{foss2003simulation,kitchenham2001accuracy,korte2008confidence,port2008comparative,shepperd2000building,stensrud2003further}.  
 Shepperd et al. champion another evaluation measure called ``standardized accuracy'', or SA~\cite{shepperd2012evaluating}.
 SA is computed as the ratio of the observed error against some reasonable fast-but-unsophisticated measurement. That is to say, 
 SA expresses itself as the ratio of some sophisticated estimate
@@ -943,7 +945,7 @@ where $N$ is the number of data used for evaluating the performance. SA uses MAE
 where $\mathit{MAE}_{guess}$ is the $\mathit{MAE}$ of a large number (e.g., 1000 runs) of random guesses. 
   Shepperd et al. observe that, over many runs,  $\mathit{MAE}_{guess}$ will converge on simply using the sample mean~\cite{shepperd2012evaluating}. 
 
-We find Shepperd et al.'s arguments for SA to be compelling. But we also agree with Sarro et al. that it is useful to   compare estimates against some human-level baseline. Hence, for completeness, we apply both evaluation metrics. As shown below, both evaluation metrics will offer the same conclusion (that DECART's performance is both useful and better than other estimation methods for predicting project health indicators).
+We find Shepperd et al.'s arguments for SA to be compelling. But we also agree with Sarro et al. that it is useful to   compare estimates against some human-level baselines. Hence, for completeness, we apply both evaluation metrics. As shown below, both evaluation metrics will offer the same conclusion (that DECART's performance is both useful and better than other  methods for predicting project health indicators).
 
 Note that in all our results: For MRE, {\em smaller}  values are {\em better}, and the best possible performance result is ``0''. For SA,  {\em larger} are {\em better }, the best possible performance result is ``100\%''.
 % \bi
@@ -958,7 +960,7 @@ Note that in all our results: For MRE, {\em smaller}  values are {\em better}, a
 We report the median (50th percentile) and interquartile range (IQR=75th-25th percentile) of our methods' performance.  
 
 
-To judge which methods do better than any other,   we could not use distribution-based statistics~\cite{kampenes2007systematic,arcuri2011practical,mittas2012ranking} since, for each project, we are making one estimate about the April 2020 status of a  project.  Hence, we need statistical
+To decide which methods do better than any other,   we could not use distribution-based statistics~\cite{kampenes2007systematic,arcuri2011practical,mittas2012ranking} since, for each project, we are making one estimate about the April 2020 status of a  project.  Hence, we need statistical
 methods that ask if two measurements (from two different learners) are in different places
 across the same distribution (the space of performance measurements across all our  learners).
 For this purpose, we take the advice of  Rosenthal et al.~\cite{rosenthal1994parametric}. They recommend parametric methods, rather than non-parametric ones, since  the latter   have  less statistical power than parametric ones. 
@@ -966,7 +968,7 @@ For this purpose, we take the advice of  Rosenthal et al.~\cite{rosenthal1994par
  They list dozens of effect size tests that divide into two groups:    the $r$ group that is based on the Pearson correlation coefficient; or the $d$ family that is based on absolute differences normalized by (e.g.) the size of the standard deviation.   
  Since Rosenthal et al comment that ``none is intrinsically better than the other'', we choose the most direct method. 
  We say that one result is the same as another if their difference  
- differs by less than  Cohen's delta ($d$=30\%*standard deviation). 
+ differs by less than  Cohen's delta ($\mathit{d=30\%*standard\ deviation}$). 
  Note that we compute $d$ separately for each different evaluation measure  (SA and MRE).
  
 
@@ -998,8 +1000,8 @@ We predict the value of health indicators for April 2020 by using data up until 
 In all these four tables, we show median  and IQR of performance results across 1,628 projects,  using all but the last month to make predictions for  April 2020. For MRE, {\em lower} values are {\em better}. Gray cells denote better results; For SA, {\em higher} values are {\em better}. In all these tables, for each row, the best learning scheme has the darkest background.
 
 
-In these results, we observe that our methods provide very different performance with these 7 health indicators' prediction. In Table~\ref{tbl:med_mre}, we see that some learners have errors over 130\% (LNR, predicting for number of commits). For the same task, other learners however, only has around half of the errors (CART, 67\%).
-Also in that   table, the median MRE score of the untuned learners (KNN, LNR, SVR, RF, CART) is over 50\%. That is,  these estimates are often wrong by a factor of two, or more.
+In these results, we observe that our methods provide very different performance with these 7 health indicators' prediction. In Table~\ref{tbl:med_mre}, we see that some learners have errors over 130\% (LNR, predicting for number of commits). For the same task, other learners, however, only have around half of the errors (CART, 67\%).
+Also in that   table, the median MRE score of the untuned learners (KNN, LNR, SVR, RFT, CART) is over 50\%. That is,  these estimates are often wrong by a factor of two, or more.
 Another thing to observe is that untuned CART usually has lower MRE and higher SA values among those five untuned learners (5/7 in MRE, 4/7 in SA). Hence, we elect to use DE to tune CART. 
 Also, these tables show that   hyperparameter optimization is   beneficial.
 The  DECART columns of Table~\ref{tbl:med_mre} and Table~\ref{tbl:med_sa} show that this method has much better median SAs and MREs than the untuned methods. As shown in the last column of Table~\ref{tbl:med_mre}, the median error for DECART is under 10\% (to be precise, 7\%). On the other hand, the results of Table~\ref{tbl:iqr_mre} and Table~\ref{tbl:iqr_sa} also demonstrate the stability of DECART (with lowest IQR when measuring the performance variability of all methods).
@@ -1153,7 +1155,7 @@ Turning now to other prediction results, our next set of results show what happe
   to simulate predicting the status of ahead   
   $1st$, $3rd$, $6th$, $12th$ month, for a project with $N$ months of data, 
   we must train on  data  collected from month 1 to month $N-1$, $N-3$, $N-6$, $N-12$, respectively.
-  That is to say that the {\em further} ahead our predictions,
+  That is, to say that the {\em further} ahead our predictions,
   the {\em less} data we have for training.
   Hence, one thing to watch for  is whether or not performance decreases as size of the
   training set decreases.
@@ -1164,7 +1166,7 @@ Turning now to other prediction results, our next set of results show what happe
   recall that the
   median DECART MRE  results in Table~\ref{tbl:med_mre} for one-month-ahead predictions  
   where less than 10\%.
-  This means that  when  Table~\ref{tbl:change} says that the  median MRE for the 12 months predictions is worse by 133\%, that translates to  than $\mathit{1.33*10\approx14\%}$ (which is still very low).
+  This means that  when  Table~\ref{tbl:change} says that the  median MRE for the 12 months predictions is worse by 133\%, that translates to  that $\mathit{1.33*10\%\approx14\%}$ (which is still very low).
 %   \ei
  
 %  \bi
@@ -1183,12 +1185,12 @@ Turning now to other prediction results, our next set of results show what happe
 \textbf{Answer 1}: Many project health indicators can be predicted, with good accuracy, for 1, 3, 6, 12   months into the future.
 \end{blockquote}
 
-The only counter result to {\bf Answer 1} when trying to  predict  the number of open 
+The only counter result to {\bf Answer 1} is when trying to  predict  the number of open 
 issues.
 Table~\ref{tbl:med_mre} and 
 Table~\ref{tbl:med_sa} show that 
 DECART's worst MRE and SA predictions are for ``openISSUE'' health indicator.
-Additionally, in  Table~\ref{tbl:med_sa}, all the SA predictions for openIssue are negative; i.e.   we are performing very badly indeed when trying to predict many issues will remain open next month. In retrospect, of course, we should have expected that predicting for how many new challenges will arise next month (in the form of new issues) is an inherently hard task. 
+Additionally, in  Table~\ref{tbl:med_sa}, all the SA predictions for openIssue are negative; i.e.   we are performing very badly indeed when trying to predict how many issues will remain open next month. In retrospect, of course, we should have expected that predicting for how many new challenges will arise next month (in the form of new issues) is an inherently hard task. 
 
 
 
@@ -1212,7 +1214,7 @@ Those counts are summarized in  Table~\ref{tbl:frq}. In this table, ``n/a''  den
 Note that none of these 12 features should be abandoned, even for ``PRmerger'', the least used feature in prediction (when predicting ``star'', this feature is used in 60\% of cases).
 
  That said, we would be hard pressed to say
- that Table~\ref{tbl:frq} indicates that only a small subset of the \tbl{feature} features are outstandingly the  most important. While Table~\ref{tbl:frq} suggests that some feature pruning might be useful, overall we would suggest that using all these features might be the best policy if in most cases.
+ that Table~\ref{tbl:frq} indicates that only a small subset of the \tbl{feature} features are outstandingly the  most important. While Table~\ref{tbl:frq} suggests that some feature pruning might be useful, overall we would suggest that using all of these features might be the best policy in most cases.
 
 
 
@@ -1221,13 +1223,14 @@ To answer this question,
 we compared the performance results of each method on all 1,628 open-source projects and predicting for 1, 3, 6, and 12 months into the future.  
 
 
-Across 1,628 projects, we report the percent of times that one learner generated best or nearly best predictions (and the darker the cell, the higher that count).  To compute ``nearly best'' we used the Cohen's $d$ measure introduced in Section~\ref{sect:stats} to compare different learning schemes in terms of MRE and SA respectively in \tbl{win_mre} and \tbl{win_sa}.  
+Across 1,628 projects, we report the percent of times that one learner generating best or nearly best predictions (and the darker the cell, the more that count).  To compute ``nearly best'' we used the Cohen's $d$ measure introduced in Section~\ref{sect:stats} to compare different learning schemes in terms of MRE and SAin \tbl{win_mre} and \tbl{win_sa}, respectively.  
+
  The comparisons in these tables are for intra-row results, where the darker cells indicate the learning methods with higher win rate. For example, in the first row of \tbl{win_mre} (except the header row), when predicting the number of commits in next month, DECART has the best MRE performance in 86\% of all 1,628 cases. 
 
-As shown in \tbl{win_mre}, in terms of MRE, DECART achieves the best performance with winning rates from $86\%$ to $99\%$ for all predictions (the median win rate is 91\%). However, the winning rates of other learners, KNN, LNR, SVR, RF, and CART, mostly range from $20\%$ to $50\%$ with the exception of openISSUE where other methods have close win rate to DECART since none methods can predict it very well. That being said, out proposed methohd, DECART, outperforms other methods on almost all the predictions out of 1,628 projects by $25\% \sim 65\%$.
+As shown in \tbl{win_mre}, in terms of MRE, DECART achieves the best performance with winning rates from $86\%$ to $99\%$ for all predictions (the median win rate is 91\%). However, the winning rates of other learners, KNN, LNR, SVR, RFT, and CART, mostly range from $20\%$ to $50\%$ with the exception of openISSUE where other methods have close win rate to DECART since none methods can predict it very well. That being said, our proposed method, DECART, outperforms other methods on almost all the predictions out of 1,628 projects by $25\% \sim 65\%$.
 
 
-For SA results, as we see in \tbl{win_sa}, although the median win rate of DECART (72\%) decreased a bit compare to MRE (91\%), it still outperforms all the rest of methods (closest runner-up, CART only gets 44\%). Specifically, DECAERT wins from $47\%$ to $88\%$ out of 4 different prediction ways on 1,628 projects. However, KNN wins from $10\%$ to $56\%$, LNR wins from $10\%$ to $77\%$, SVR wins from $4\%$ to $43\%$, RF wins from $12\%$ to $64\%$ and CART wins from $19\%$ to $71\%$, respectively. Most of the time, all of the other methods wins rates are less than $50\%$. After we take a further look, SVR performs relatively worse, the median win rate is only $14\%$ compared to the median of DECART win rate, $72\%$. 
+For SA results, as we see in \tbl{win_sa}, although the median win rate of DECART (72\%) decreased a bit compare to MRE (91\%), it still outperforms all the rest of methods (closest runner-up, CART only gets 44\%). Specifically, DECAERT wins from $47\%$ to $88\%$ out of 4 different prediction ways on 1,628 projects. However, KNN wins from $10\%$ to $56\%$, LNR wins from $10\%$ to $77\%$, SVR wins from $4\%$ to $43\%$, RFT wins from $12\%$ to $64\%$ and CART wins from $19\%$ to $71\%$, respectively. Most of the time, all of the other methods wins rates are less than $50\%$. After we take a further look, SVR performs relatively worse, the median win rate is only $14\%$ compared to the median of DECART win rate, $72\%$. 
 
 % bite
 
@@ -1240,7 +1243,7 @@ Based on the results from our experiments, we conclude that:
 \begin{blockquote}
 \noindent
 \textbf{Answer 3}: 
-DECART generates better predicting perfor-mance than other methods in 91\% of our 1,628 projects.
+DECART generates better predicting perfor-mance than other methods in 91\% of our 1,628 projects (MRE, median).
 \end{blockquote}
 
 
@@ -1293,15 +1296,15 @@ DECART generates better predicting perfor-mance than other methods in 91\% of ou
 \subsection{The efficiency of DECART}
  DECART   is not only effective (as shown in \tbl{win_mre} and \tbl{win_sa}), but also  very fast. In our study, it took 11,530 seconds to run DECART on 1,628 projects (on a dual core 4.67 GHz  laptop);
 i.e. 7 seconds per datasets. This time includes optimizing CART for each 
-specific dataset, and then making predictions. Note that, for these experiments, we made no use of any special hardware (i.e. we used neither GPUs nor  software libraries that interleave multiple cores in some clever manner).
+specific dataset, and then making predictions. Note that, for these experiments, we made no use of any special hardware (i.e. we used neither GPUs nor cloud services that interleave multiple cores in some clever manner).
 
 
 The speed of DECART is an important finding. 
 In our experience, the complexity of hyperparameter optimization is a major concern that limits its widespread use.   For example, Fu et al. report that hyperparameter optimization for
 code defect reduction requires nearly three days of CPU per dataset~\cite{Fu2016TuningFS}.
-If all of our 1,600+ datasets needed the same amount of CPU, then that would have been a major deterrent to the use of the methods of this paper.
+If all of our 1,600+ datasets needed the same amount of CPU, then that would be a major deterrent to the use of the methods of this paper.
 
-But why is DECART   so fast and so effective?
+But why is DECART so fast and effective?
 Firstly,  DECART runs fast since it works on   very small datasets. 
 This paper studies three to five years of project data. For each month, we  extract the 12 features shown in  Table~\ref{tbl:feature}. That is to say,  DECART's optimizations only have to explore datasets with  $\mathit{12*60}$
  data points per project.
@@ -1364,15 +1367,14 @@ We observe that for the performance results in \tbl{med_mre}, while predicting t
 But that raised another red flag: suppose {\em all} our projects had reached some steady state prior to April 2020. In that case, predicting (say) next month's health would be a simple matter of repeating last month's value. In our investigation, we have three reasons for believing that this is not the case.
 Firstly, prediction in this domain is difficult. If such steady state had been achieved, then all our learners would be reporting very low errors. As seen in Table~\ref{tbl:med_mre}, this is not the case.
 
-Secondly, we looked into the columns in our raw data and looking for long sequences of stable or zero values. This case does not happen in most cases: our data contains much variation across the entire lifecycle of our projects.
+Secondly, we looked into the columns in our raw data, looking for long sequences of stable or zero values. This case does not happen in most cases: our data contains much variation across the entire lifecycle of our projects.
 
-Thirdly, just to be sure, we conducted another round of experiments. Instead of predicting for April 2020, we instead predicted for April 2019 using
+Thirdly, just to be sure, we conducted another round of experiments. Instead of predicting for April 2020, we do the prediction for April 2019 using
 data collected prior to April 2018.
- Table~\ref{tbl:mid} shows the results. In this table, if a project had (say) $N=60$ months of data, we went to months $N/2$ and used DECART to predicted 12 months into the future (to $N/2+12$). The columns for Table~\ref{tbl:mid}  should  to be compared to the right-hand-side columns of Table~\ref{tbl:med_mre}, Table~\ref{tbl:iqr_mre},  Table~\ref{tbl:med_sa}, and Table~\ref{tbl:iqr_sa}. When that comparison is made, we see that predicting that predicting for month $N/2+12$ generates similar results as predicting for  month $N$ using all data from months  $1$ to $N-1$. 
+ Table~\ref{tbl:mid} shows the results. In this table, if a project had (say) $N=60$ months of data, we went to months $N/2$ and used DECART to predicted 12 months into the future (to $N/2+12$). The columns for Table~\ref{tbl:mid}  should be compared to the right-hand-side columns of Table~\ref{tbl:med_mre}, Table~\ref{tbl:iqr_mre},  Table~\ref{tbl:med_sa}, and Table~\ref{tbl:iqr_sa}. In that comparison, we see that predicting for month $N/2+12$ generates comparable results as predicting for  month $N$ using all data from months  $1$ to $N-1$. 
  
  In summary,
-our results are not unduly biased by predicting just for April 2020. Evidence: we can still obtain accurate results
-if we predict for April 2019 using data from before April 2018.
+our results are not unduly biased by predicting just for April 2020. As the evidence, we can still obtain accurate results if we predict for April 2019 using data from before April 2018.
 
  %data source = 
 \begin{table}[!t]
@@ -1401,10 +1403,10 @@ The design of this study may have several validity threats~\cite{feldt2010validi
 
 \textbf{Parameter Bias:} The settings to the control hyperparameters of the predicting methods can have a positive effect on the efficacy of the prediction. By using hyperparameter-optimized method in our experiment, we explore the space of possible hyperparameters for the predictor, hence we assert that this study suffers less parameter bias than some other studies.
 
-\textbf{Metric Bias:} We use Magnitude of the Relative Error (MRE) as one of the performance metrics in the experiment. However, MRE is criticized because of its bias towards error underestimations~\cite{foss2003simulation,kitchenham2001accuracy,korte2008confidence,port2008comparative,shepperd2000building,stensrud2003further}. Specifically, when the benchmark error is small or equal to zero, the relative error could become extremely large or infinite. This may lead to an undefined mean or at least a distortion of the result~\cite{chen2017new}. In our study, we do not abandon MRE since there exists known baselines for human performance in effort estimation expressed in terms of MRE~\cite{Jorgensen03}. To overcome this limitation, we set a customized MRE treatment to avoid ``divide by zero'' issue and also apply Standardized Accuracy (SA) as the other measure of the performance.
+\textbf{Metric Bias:} We use Magnitude of the Relative Error (MRE) as one of the performance metrics in the experiment. However, MRE is criticized because of its bias towards error underestimations~\cite{foss2003simulation,kitchenham2001accuracy,korte2008confidence,port2008comparative,shepperd2000building,stensrud2003further}. Specifically, when the benchmark error is small or equal to zero, the relative error could become extremely large or infinite. This may lead to an undefined mean or at least a distortion of the result~\cite{chen2017new}. In our study, we do not abandon MRE since there exist known baselines for human performance in effort estimation expressed in terms of MRE~\cite{Jorgensen03}. To overcome this limitation, we set a customized MRE treatment to deal with ``divide by zero'' issue and also apply Standardized Accuracy (SA) as the other measure of the performance.
 
 \textbf{Sampling Bias:} 
-In our study, we collect 78,455 months with 12 features of 1,628 GitHub projects data for the experiment. Also we use 7 GitHub development features as health indicators of open-source project. While we reach good predicting performance on those data, it would be inappropriate to conclude that our technique always gets positive result on open-source projects, or the health indicators we use could completely decide the project's health status.To mitigate this problem, we release a replicable package of our entire experiment to support the research community to reproduce, improve or refute our results on broader data and indicators.
+In our study, we collect 78,455 months with 12 features of 1,628 GitHub projects data for the experiment. Also we use 7 GitHub development features as health indicators of open-source project. While we reach good predicting performance on those data, it would be inappropriate to conclude that our technique always gets positive result on open-source projects, or the health indicators we use could completely decide the project's health status. To mitigate this problem, we release a replicable package of our entire experiment to support the research community to reproduce, improve or refute our results on broader data and indicators.
 
  
 
@@ -1429,29 +1431,28 @@ In our study, we collect 78,455 months with 12 features of 1,628 GitHub projects
 
  
 
-Our results make a compelling case for open source development. Companies that only build in-house proprietary products may be cutting themselves off from the information needed to reason about those projects. Software built in some public platforms are sources
+Our results make a compelling case for open source development. Companies that only build in-house proprietary products may be cutting themselves off from the information needed to reason about those projects. Software built on some public platforms are sources
 of data that can be used to
 make accurate predictions  about those projects. While the activity of a single developer may be random and hard to predict, when large groups of developers work together on software projects,
 the resulting behavior can be predicted with good accuracy. For example, after building predictors for seven project health indicators, we can assert that usually (for 6/7 indicators), we can make predictions with less than 10\% error (median values). 
 
 Our results come with some caveats. Some human activity is  too random, for the law of large numbers. We know this since we cannot predict everything  
  with high accuracy. For example, 
- while we {\em can}  predict 
- for how many issues will be {\em closed}, we were   unsuccessful in building good predictions for     how many  will remain {\em open}. 
+ while we {\em can}  predict how many issues will be {\em closed}, we were   unsuccessful in building good predictions for     how many  will remain {\em open}. 
  Also, to make predictions, we must take care to tune the data mining algorithms to the idiosyncrasies of the datasets.
- Data mining algorithms rely on statistical properties that are emergent in large samples of data.
+ Some data mining algorithms rely on statistical properties that are emergent in large samples of data.
  Hence, such algorithms may have problems reasoning about very small datasets, such as those studied here.
  Hence, before making predictions, it is vitally   important to adjust the learners to the idiosyncrasies of the dataset via hyperparameter optimization. Unlike prior hyperparameter optimization work~\cite{Fu2016TuningFS}, our optimization process is very fast (seven seconds per dataset). Accordingly, we assert that for predicting software project health, hyperparameter optimization is the preferred technology.
  
 As to future work, there is still much to do. Firstly, we know many organizations such as IBM that run large in-house ecosystems where, behind firewalls, thousands of programmers build software using  a private GitHub system. It would be insightful to see if our techniques work for such ``private'' GitHub networks.
 Secondly, our results are good but not perfect. 
 Table~\ref{tbl:med_mre} shows that while our median results are good, some prediction tasks are harder than others
-(e.g. open issues, commits, and start).
-Also, Table~\ref{tbl:med_sa} shows that further improvements are possible. The DE algorithm used in this paper is essentially Storn's 1997 version and there are many more recent variants of that algorithm that could be useful~\cite{wu2018ensemble,das2016recent}. Another thing to try here might be deep learning. Normally we might not recommend slow algorithms like deep neural networks for reasoning over 1,600+ projects. Bur since our datasets are relatively small, that there might be ways to short cut the usual learning cycle. For example, suppose we found that our 1,600+ projects cluster into (say) just a handful of different project types. In that case, the target for deep learning models could be very small and fast to process.
+(e.g. open issues, commits, and star).
+Also, Table~\ref{tbl:med_sa} shows that further improvements are possible. The DE algorithm used in this paper is essentially Storn's 1997 version and there are many more recent variants of that algorithm that could be useful~\cite{wu2018ensemble,das2016recent}. Another thing to try here might be deep learning. Normally we might not recommend slow algorithms like deep neural networks for reasoning over 1,600+ projects. But since our datasets are relatively small, that there might be ways to short cut the usual learning cycle. For example, suppose we found that our 1,600+ projects cluster into (say) just a handful of different project types. In that case, the target for deep learning models could be very small and fast to process.
 
 
 Lastly, the GitHub project health literature offers many more targets for this kind of reasoning (e.g. the programmer assessment metrics
-used by Bao et al.~\cite{bao2019large}).  Our results seem to indicate that   the law of large numbers seems to apply to GitHub. If so, then there should be many more things we can readily predict about open source  projects (and not just the targets listed in \tbl{feature}).
+used by Bao et al.~\cite{bao2019large}).  Our results seem to indicate that   the law of large numbers could apply to GitHub. If so, then there should be many more things we can readily predict about open source  projects (not just the targets listed in \tbl{feature}).
 
 \vspace{3mm}
 
