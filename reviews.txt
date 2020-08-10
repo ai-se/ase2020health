@@ -1,0 +1,68 @@
+### Revision detials:
+
+  A. Clarification about health indicators, health is too big to say, hard to define, what we did is to explore indicators
+
+  B. An explanation on why we use these indicators
+
+  C. Mapping from features to health justification
+
+  D. Description of DECART model construction
+
+  E. Explain we need to know the trend (how do we know to what extent a number indicates a project healthy)
+
+  F. Features correlation justification
+
+
+
+### Reviewer 1:
+
+  1. “I could not see an explicit link of how the selected 7 health indicators will help those users.” (B, C)
+
+  2. “the paper does not provide an intuition why these 7 metrics predicted in this work can be good health indicators.” (A, B)
+
+  3. “The authors did not discuss the gap or limitation of those prior works.” (NA, we did in sec2)
+
+  4. “I don’t think the authors can argue that their work has better results than other works if the authors did not conduct an experiment to compare the performance.” (NA)
+
+  5. “Why CART + DE? Why DE? Why this statistical analysis?” (NA)
+
+  6. “It is very unclear to me how the authors build the prediction models.” (D)
+
+  7. “Why the MRE and SA of the 1-month prediction is 100%? Shouldn’t MRE close to zero?” (NA)
+
+
+### Reviewer 2:
+
+  1. “The projects health indicators defined in the paper are not novel, which are commonly used in the existing literature.” (A)
+
+  2. “What means project health exactly? Or, how do we know those features can indicate project health?” (B, C)
+
+  3. “Notice that the features in the existing literature are not extensively included, why?” (B)
+
+  4. “How do we know to what extent a number indicates a project healthy?” (B, E)
+
+  5. “The 12 features (listed in Table 4) may greatly correlate with each other.” (F)
+
+  6. “RQ2 explores "What features matter the most in prediction". However, there is no explanation of why this question matters.” (NA)
+
+  7. “Their data was not available to other researchers is wrong” (NA)
+
+  8. “The project health indicators are confusing, inconsistent.” (NA)
+
+  9. “What means 78,455 months of data from 1,628 Github projects? Is it cumulative by the number of months per project?” (NA)
+
+
+
+### Reviewer 3:
+
+  1. “From the predicted values, how can we judge whether the projects are healthy or not?” (B, C)
+
+  2. “What is the definition of 'not suitable' and 'irrelevant' repositories in this study?” (NA)
+
+  3. “There are projects whose monthly commits are 0. With such inactive projects, is your data appropriate?” (E)
+
+  4. “Why these 7? Is this set enough? What are the relations with these indicators and project health?” (B, C)
+
+  5. “I think it inappropriate to show the results as the percentages compared with one-month results” (NA)
+
+  6. “One missing threat to validity is the existence of confounding factors.” (NA)
